@@ -5,9 +5,9 @@ const { User } = require('../db/models');
 
 const { secret, expiresIn } = jwtConfig;
 
-// Sends a JWT Cookie
+// Sends JWT
 const setTokenCookie = (res, user) => {
-    // Create the token.
+    // Create token
     const safeUser = {
       id: user.id,
       email: user.email,
@@ -18,7 +18,6 @@ const setTokenCookie = (res, user) => {
       secret,
       { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
     );
-
     const isProduction = process.env.NODE_ENV === "production";
 
     // Set the token cookie
