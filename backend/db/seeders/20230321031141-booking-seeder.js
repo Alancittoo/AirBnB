@@ -18,20 +18,21 @@ module.exports = {
       {
         spotId: 3,
         userId: 4,
-        startDate: '2023-9-10',
-        endDate: '2023-11-12'
+        startDate: new Date('2023-9-10'),
+        endDate: new Date('2023-11-12')
       },
       {
         spotId: 2,
         userId: 1,
         startDate: new Date('2023-10-03'),
-        endDate: '2023-12-12'
+        endDate: new Date('2023-12-12')
       }
     ])
+
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
-    await queryInterface.bulkDelete(options);
+    await queryInterface.bulkDelete(options, 'Bookings');
   }
 };

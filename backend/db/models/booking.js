@@ -20,10 +20,30 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    spotId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    startDate:DataTypes.DATEONLY,
-    endDate: DataTypes.DATEONLY
+    spotId: {
+      type: DataTypes.INTEGER,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE'
+    },
+    startDate: {
+     type: DataTypes.DATE,
+     allowNull: false,
+     validate: {
+      isDate: true
+     }
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        checkEndDate(value) {
+          if (value < this.startDate) throw new Error("End date must be after start date!");
+        },
+        }
+      }
   }, {
     sequelize,
     modelName: 'Booking',
