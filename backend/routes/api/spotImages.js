@@ -16,30 +16,37 @@ const { handleValidationErrorsSpots, handleValidationErrorsBookings } = require(
 const router = express.Router();
 
 
-router.delete('/:imageId', requireAuth, async (req,res) => {
-  let image = await SpotImage.findOne({
-    where: {id: req.params.imageId},
-    include: {model: Spot, as: 'previewImage'}
-  })
-  if (!image) {
-    res.status(404);
-    return res.json({
-      "message": "Spot Image couldn't be found",
-      "statusCode": 404
-    })
-  } else {
-    let imageJson = image.toJSON();
-    if (imageJson.previewImage.ownerId === req.user.id) {
-      image.destroy();
+router.delete('/:spotImageId', restoreUser, requireAuth, async(req, res)=>{
+  let spotImageDataObj = await SpotImage.scope('currentSpot').findByPk(req.params.spotImageId)
+  let spotImageDataString = JSON.stringify(spotImageDataObj);
+  let spotImage = JSON.parse(spotImageDataString)
+
+  if(!spotImageDataObj){
+      res.status(404)
       return res.json({
-        "message": "Successfully deleted",
-        "statusCode": 200
+          message: "Spot image couldn't be found",
+          statusCode: 404
       })
-    } else {
-      res.status(403);
-      return res.json("You are not authorized to delete this image")
-    }
   }
+  let spotDataObj = await Spot.findByPk(spotImage.spotId)
+  let spotDataString = JSON.stringify(spotDataObj);
+  let spot = JSON.parse(spotDataString)
+  let userDataObj = req.user;
+  let userDataString = JSON.stringify(userDataObj);
+  let user = JSON.parse(userDataString)
+  if(spot.ownerId !== user.id){
+      res.status(403)
+      return res.json({
+          message: "Must be the owner to delete",
+          statusCode: 403
+      })
+  }
+  await spotImageDataObj.destroy()
+  res.status(200)
+  return res.json({
+      message: "Successfully deleted",
+      statusCode: 200
+  })
 })
 
 
