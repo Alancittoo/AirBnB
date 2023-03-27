@@ -262,7 +262,7 @@ router.get("/current", restoreUser, requireAuth, async (req, res) => {
       });
 
       if (review) {
-        spot.avgRating = Number.review[0].avgStarRating;
+        spot.avgRating = review[0].avgStarRating;
       } else {
         spot.avgRating = null;
       }
