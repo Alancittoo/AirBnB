@@ -79,7 +79,7 @@ router.post('/:reviewId/images', requireAuth, validateCreateReviewImage, async (
       where: {reviewId: req.params.reviewId},
       attributes: [[Sequelize.fn('count', Sequelize.col('url')), 'reviewImages']]
     })
-    if (images[0].reviewImages > 5) {
+    if (images[0].reviewImages > 10) {
       return res.status(403).json({
         "message": "Maximum number of images for this resource was reached",
         "statusCode": 403

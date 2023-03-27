@@ -484,8 +484,6 @@ router.get('/:spotId', async (req, res) => {
             return res.status(404).json({
                 message: "Spot couldn't be found",
                 statusCode: 404,
-
-
             })
         }
 
