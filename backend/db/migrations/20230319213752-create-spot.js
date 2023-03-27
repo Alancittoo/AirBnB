@@ -69,18 +69,9 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
-    await queryInterface.addConstraint('Spots', {
-      fields: ['ownerId'],
-      type: 'foreign key',
-      name: 'Spots_ownerId_fkey',
-      references: {
-        table: 'Users',
-        field: 'id'
-      },
-      onDelete: 'CASCADE'
-    });
-
   },
+
+
 
   async down(queryInterface, Sequelize) {
     options.SCHEMA = 'Spots'
