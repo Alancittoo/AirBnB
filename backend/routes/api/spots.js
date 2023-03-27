@@ -345,10 +345,9 @@ router.get('/:spotId', async (req, res) => {
         })
         //current user must be the owner
         const ownerId = targetSpot.ownerId
-
-        if (!targetSpot) {
-            res.status(404)
-            return res.json({
+        let spot = await Spot.findByPk(req.params.spotId);
+        if (!spot) {
+            return res.status(404).json({
                 message: "Spot couldn't be found",
                 statusCode: 404,
 
