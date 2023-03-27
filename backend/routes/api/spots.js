@@ -393,6 +393,22 @@ router.get('/:spotId', async (req, res) => {
             return next(err)
         }
 
+        const targetReviews = await Review.findAll({
+            where: {
+                spotId
+            }
+        })
+
+        for (let review of targetReviews) {
+            if (review.userId === currentUserId) {
+                const err = new Error("User already has a review for this spot");
+                err.status = 403;
+                err.error = "User already has a review for this spot"
+                res.status(403)
+                return res.json(err)
+            }
+        }
+
         let errorArr = []
         if (!review) errorArr.push('Review text is required')
         if (!stars || stars < 1 || stars > 5) errorArr.push('Stars must be an integer from 1 to 5')
@@ -411,7 +427,7 @@ router.get('/:spotId', async (req, res) => {
             spotId: spot.id
         })
 
-        res.json(newReview)
+        res.status(201).json(newReview)
     })
 
     ////GET REVIEWS BY SPOT ID
