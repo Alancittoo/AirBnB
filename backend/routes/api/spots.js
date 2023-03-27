@@ -143,7 +143,7 @@ let Spots = await Spot.scope('getAll').findAll(query)
             reviewSum += review.stars
         }
         let reviewAverageNum = reviewSum / reviews.length;
-        let reviewAverage = reviewAverageNum.toFixed(2)
+        let reviewAverage = reviewAverageNum.toFixed(1)
 
         // Add the average rating and preview image URL (if available) to the "Spot" object
         spot.setDataValue('avgRating', reviewAverage)
@@ -263,6 +263,7 @@ router.get("/current", restoreUser, requireAuth, async (req, res) => {
 
       if (review) {
         spot.avgRating = review[0].avgStarRating;
+        spot.avgRating.toFixed(1)
       } else {
         spot.avgRating = null;
       }
@@ -318,7 +319,7 @@ router.get('/:spotId', async (req, res) => {
             }
             let numReviews = reviews.length;
             let reviewAverageNum = reviewSum / reviews.length;
-            let reviewAverage = reviewAverageNum.toFixed(2)
+            let reviewAverage = reviewAverageNum.toFixed(1)
             //set the data into each spot
             if(!numReviews){
                 numReviews = 0
@@ -344,6 +345,17 @@ router.get('/:spotId', async (req, res) => {
         })
         //current user must be the owner
         const ownerId = targetSpot.ownerId
+
+        if (!targetSpot) {
+            res.status(404)
+            return res.json({
+                message: "Spot couldn't be found",
+                statusCode: 404,
+
+
+            })
+
+        }
 
         if (ownerId !== req.user.id) {
             const err = new Error("Forbidden");
