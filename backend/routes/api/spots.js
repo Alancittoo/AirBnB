@@ -256,7 +256,7 @@ router.get("/current", restoreUser, requireAuth, async (req, res) => {
       });
 
       if (review) {
-        spot.avgRating = review[0].avgStarRating;
+        spot.avgRating = review[0].avgStarRating.toFixed(2);
       } else {
         spot.avgRating = null;
       }
