@@ -9,7 +9,7 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId: '1',
+        ownerId: 1,
         address: '911 Shorty Ave',
         city: 'Oceanside',
         state: 'California',
@@ -21,7 +21,7 @@ module.exports = {
         price: 120
       },
       {
-        ownerId: '2',
+        ownerId: 2,
         address: '420 Puff Street',
         city: 'San Diego',
         state: 'California',
@@ -33,7 +33,7 @@ module.exports = {
         price: 420
       },
       {
-        ownerId: '2',
+        ownerId: 2,
         address: '125 Summoners Rift Ave',
         city: 'League of Legends',
         state: 'Rhode Island',
@@ -45,7 +45,7 @@ module.exports = {
         price: 70
       },
       {
-        ownerId: '4',
+        ownerId: 4,
         address: '875 Ackermann Road',
         city: 'Titan',
         state: 'Florida',
@@ -57,7 +57,7 @@ module.exports = {
         price: 250
       },
       {
-        ownerId: '2',
+        ownerId: 2,
         address: '128 Kirby Circle',
         city: 'Kirby City',
         state: 'Ohio',
@@ -69,7 +69,7 @@ module.exports = {
         price: 250
       },
       {
-        ownerId: '3',
+        ownerId: 3,
         address: '324 Deadpool Street',
         city: 'Wade',
         state: 'New York',
@@ -81,7 +81,7 @@ module.exports = {
         price: 505
       },
       {
-        ownerId: '4',
+        ownerId: 4,
         address: 'Sukuna Road',
         city: 'Itadori',
         state: 'Oklahoma',
@@ -93,7 +93,7 @@ module.exports = {
         price: 1000
       },
       {
-        ownerId: '2',
+        ownerId: 2,
         address: 'Inosuke Boulevard',
         city: 'Demon City',
         state: 'Georgia',
@@ -105,7 +105,7 @@ module.exports = {
         price: 320
       },
       {
-        ownerId: '1',
+        ownerId: 1,
         address: 'Jiriya Toad Road',
         city: 'Hidden Leaf',
         state: 'Texas',
@@ -117,7 +117,7 @@ module.exports = {
         price: 810
       },
       {
-        ownerId: '2',
+        ownerId: 2,
         address: 'Killua',
         city: 'Lightning Strike',
         state: 'Nebraska',
@@ -129,7 +129,7 @@ module.exports = {
         price: 15
       },
       {
-        ownerId: '3',
+        ownerId: 3,
         address: '424 Strip Avenue',
         city: 'Las Vegas',
         state: 'Nevada',
