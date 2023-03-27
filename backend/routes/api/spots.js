@@ -66,8 +66,14 @@ router.get('/', async (req, res) => {
 const page = req.query.page;
 const size = req.query.size;
 
+page = parseInt(page);
+    size = parseInt(size);
+
+    if (Number.isNaN(page)) page = 1;
+    if (Number.isNaN(size)) size = 20;
+
 // If "page" and "size" are both present and greater than 0, add a "limit" and "offset" property to the query object
-if (page > 0 && size > 0) {
+if (page > 0 && page < 11 && size > 0 && size < 21) {
         query.limit = size;
         query.offset = size * (page - 1);
     }
@@ -256,7 +262,7 @@ router.get("/current", restoreUser, requireAuth, async (req, res) => {
       });
 
       if (review) {
-        spot.avgRating = review[0].avgStarRating.toFixed(2);
+        spot.avgRating = Number.review[0].avgStarRating;
       } else {
         spot.avgRating = null;
       }
