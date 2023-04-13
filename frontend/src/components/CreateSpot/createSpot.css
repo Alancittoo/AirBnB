@@ -1,0 +1,11 @@
+.create-spot {
+    width: 100px;
+    height: 25px;
+    margin-left:25px;
+    margin-top:10px;
+    margin-bottom: 5px;
+    background-color: rgb(228, 60, 60);
+    color:white;
+    border-radius: 3px;
+    cursor: pointer;
+  }

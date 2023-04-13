@@ -1,0 +1,64 @@
+.spots-div img {
+    width: 350px;
+    height: 250px;
+    border: 1px solid black;
+    padding: 1px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.spots-div img .tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+.spot-location {
+    display: flex;
+    font-weight: bold;
+    color: rgb(33, 134, 222);
+    justify-content: flex-start;
+}
+
+.spot-wrapper-div {
+    display: flex;
+    justify-content: space-around
+}
+.spot-info {
+    display: flex;
+    flex-direction: column;
+}
+.wrapper-div {
+    display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.wrapper-div .spots-div {
+    padding:0px 30px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
