@@ -51,13 +51,37 @@ label {
     margin-left:25px;
     margin-top:10px;
     margin-bottom: 5px;
-    background-color: rgb(228, 60, 60);
-    color:white;
+    background-color: white;
+
+    color: black;
     border-radius: 3px;
     cursor: pointer;
     border: 2px solid black;
 }
 .submit-button:hover {
-    box-shadow: 5px 5px 5px black;
+    box-shadow: 2px 2px 5px black;
+    background-color: red;
     cursor: pointer;
+    color: white;
+
+}
+
+.demo-user {
+    width: 100px;
+    height: 20px;
+    margin-left: 25px;
+    padding-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: white;
+    color: black;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 2px solid black;;
+}
+
+.demo-user:hover {
+    background-color: red;
+    color: white;
+    box-shadow: 2px 2px 5px black;
 }
