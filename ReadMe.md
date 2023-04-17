@@ -1,6 +1,10 @@
 # AirBnB Clone
 This is just a clone off airBnb, the live link is here: https://app-academy-airbnb-hn0e.onrender.com
 
+# This is the landing Page
+![Screenshot 2023-04-17 052432](https://user-images.githubusercontent.com/98733614/232442956-4d0f8dd7-8875-41ea-8dcd-2e39eb2b2ab5.png)
+
+
 ## Database Schema Design
 <img width="742" alt="airbnb_dbdiagram" src="https://user-images.githubusercontent.com/98733614/232441999-a913e1c1-d4fb-4fbc-ab84-78d4d81f6911.png">
 
