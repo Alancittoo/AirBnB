@@ -3,8 +3,9 @@ This is just a clone off airBnb, the live link is here: https://app-academy-airb
 
 ## Database Schema Design
 
-![airbnb-dbdiagram]
-![alt text](http://url/to/airbnb_dbdiagram.png)
+![airbnb-db<img width="742" alt="airbnb_dbdiagram" src="https://user-images.githubusercontent.com/98733614/232441999-a913e1c1-d4fb-4fbc-ab84-78d4d81f6911.png">
+diagram]
+![alt text]()
 
 [airbnb-dbdiagram]: ../assets/airbnb_dbdiagram.png
 
