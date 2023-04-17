@@ -3,8 +3,6 @@ import { NavLink, Link, } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-// import logo from '../../assets/logo'
-
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -22,7 +20,7 @@ function Navigation({ isLoaded }) {
           <div>
             {!sessionUser ? null :
             <div className='create-spot-link-container'>
-              <Link to="/spots/new" className='create-spot'> <p className='navbar-create-spot'>Create a New Spot</p></Link>
+              <Link to="/spots/new" className='navbar-create-spot' > <p className='navbar-create-spot'>Create a New Spot</p></Link>
             </div>}
           </div>
           <div>

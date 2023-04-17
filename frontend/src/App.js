@@ -8,6 +8,7 @@ import SpotIndex from "./components/SpotDetails";
 import UserSpots from "./components/SpotDetails/usersSpot";
 import CreateNewSpot from "./components/CreateSpot";
 import EditSpot from "./components/UpdateSpot/index";
+import ReviewIndex from "./components/Reviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route exact path={"/spots/:spotId/edit"}>
             <EditSpot />
+          </Route>
+          <Route exact path={"/reviews/current"}>
+            <ReviewIndex />
           </Route>
           <Route>Page Not found</Route>
         </Switch>

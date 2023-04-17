@@ -1,64 +1,127 @@
+
 .spots-div img {
-    width: 350px;
-    height: 250px;
-    border: 1px solid black;
-    padding: 1px;
-    margin-bottom: 5px;
-    margin-top: 10px;
-}
-
-.spots-div img .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-}
-
-.spot-location {
-    display: flex;
-    font-weight: bold;
-    color: rgb(33, 134, 222);
-    justify-content: flex-start;
-}
-
-.spot-wrapper-div {
-    display: flex;
-    justify-content: space-around
-}
-.spot-info {
-    display: flex;
-    flex-direction: column;
-}
-.wrapper-div {
-    display: grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.wrapper-div .spots-div {
-    padding:0px 30px;
-}
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  width: 350px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
+  margin-top: 10px;
+  transition: transform 0.2s ease-in-out;
+  border: 3px solid white;
   }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
+  .spots-div img:hover {
+  transform: scale(1.1);
+  }
 
-  /* Position the tooltip text - see examples below! */
+  .spot-location {
+  display: flex;
+  font-weight: 600;
+  color: #490101;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 8px;
+  }
+
+  .rating-spots {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 15px;
+  }
+
+  .rating-spots p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #484848;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 8px;
+  }
+
+  .spot-wrapper-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 350px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  background-color: white;
+  }
+
+  .spot-wrapper-div:hover {
+  transform: translateY(-5px);
+  }
+
+  .spot-info {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  color: #484848;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  }
+
+  .spot-price {
+    margin-top: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+  .spot-info p {
+  margin-right: 8px;
+  }
+
+  .wrapper-div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  text-decoration: none;
+  background-color: #A9A9 ;
+  }
+
+  .wrapper-div .spots-div {
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  padding: 0px 10px;
+  }
+
+  .spots-div:hover::before {
   position: absolute;
+  content: attr(data-tooltip);
+  color: #484848;
   z-index: 1;
-}
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.2s ease-in-out;
+  }
+
+  .tool {
+  text-decoration: none;
+  position: relative;
+  }
+
+  .tool:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  }
+
+  .rating-spots {
+
+  }

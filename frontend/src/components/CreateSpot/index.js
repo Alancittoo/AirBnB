@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewSpotThunk } from "../../store/spotsReducer";
+import { createNewSpotThunk, thunkCreateImg } from "../../store/spotsReducer";
 import { useHistory } from "react-router-dom";
 import './createSpot.css'
 
@@ -15,46 +15,112 @@ function CreateNewSpot({ user }) {
     const [lng, setLng] = useState(0);
     const [description, setDescription] = useState("");
     const [name, setName] = useState("");
-    const [image, setImage] = useState([]);
-    const [image2, setImage2] = useState([]);
-    const [image3, setImage3] = useState([]);
-    const [image4, setImage4] = useState([]);
-    const [image5, setImage5] = useState([]);
+    const [image, setImage] = useState('');
+    const [image2, setImage2] = useState('');
+    const [image3, setImage3] = useState('');
+    const [image4, setImage4] = useState('');
+    const [image5, setImage5] = useState('');
     const [price, setPrice] = useState(0);
     const [errors, setErrors] = useState({});
 
+    const validateForm = () => {
+        const errors = {};
+
+        if (!description || description > 30) {
+            errors.description = "Description needs a minimum of 30 characters";
+        }
+
+        // if (!lat || isNaN(lat)) {
+        //   errors.lat = "Latitude is required and must be a number";
+        // }
+
+        // if (!lng || isNaN(lng)) {
+        //   errors.lng = "Longitude is required and must be a number";
+        // }
+
+        if (!address) {
+            errors.address = "Address is required";
+        }
+
+        if (!price || isNaN(price)) {
+            errors.price = "Price is required";
+        }
+
+        if (image.length === 0) {
+            errors.image = "Image is required";
+        }
+
+        if (!country) {
+            errors.country = "Country is required";
+        }
+
+        if (!name) {
+            errors.name = "Name is required";
+        }
+
+        if (!city) {
+            errors.city = "City is required";
+        }
+
+        if (!state) {
+            errors.state = "State is required";
+        }
+
+        return errors;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newSpot = await dispatch(
-            createNewSpotThunk({
-                country,
-                address,
-                city,
-                state,
-                description,
-                name,
-                lat,
-                lng,
-                price,
-                image,
-            })
-        );
-        history.push(`/spot/${newSpot.id}`);
+        const errors = validateForm();
+        setErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
+            dispatch(
+                createNewSpotThunk({
+                    country,
+                    address,
+                    city,
+                    state,
+                    lat: Number(lat),
+                    lng: Number(lng),
+                    description,
+                    name,
+                    price: Number(price),
+                    image
+                })
+            )
+                .then((newSpot) => {
+                    const newImages = [image, image2, image3, image4, image5]
+                    for (let i = 0; i < newImages.length; i++) {
+                        console.log('IMAGES', newImages[i])
+                        console.log('Increment', i)
+                        dispatch(thunkCreateImg(newSpot.id, {url: newImages[i], preview: 1}))
+                    }
+                    history.push(`/spot/${newSpot.id}`)
+                })
+
+                .catch(async (res) => {
+                    const data = await res.json();
+                    console.log("Error response data:", data);
+                });
+        }
     };
 
     return (
         <>
-            <h1>Creat a New Spot</h1>
-            <form
+            <h1>Create a New Spot</h1>
+
+            <form className="create-spot-form"
                 onSubmit={handleSubmit}
             >
                 <h4>Where's your place located?</h4>
-                <caption>
+                <p>
                     Guests will only get your exact address once they booked a
                     reservation.
-                </caption>
+                </p>
                 <br />
                 <br />
+                {errors.country && (<p className="error-message">{errors.country}</p>)}
 
                 <label className="country-input">
                     Country
@@ -63,10 +129,12 @@ function CreateNewSpot({ user }) {
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
                         placeholder="Country"
-                        required
+                    // required
                     />
                 </label>
                 <br />
+
+                {errors.address && (<p className="error-message">{errors.address}</p>)}
 
                 <label className="address-input">
                     Street Address
@@ -75,10 +143,12 @@ function CreateNewSpot({ user }) {
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Address"
-                        required
+                    // required
                     />
                 </label>
                 <br />
+
+                {errors.city && (<p className="error-message">{errors.city}</p>)}
 
                 <label className="city-input">
                     City
@@ -87,9 +157,11 @@ function CreateNewSpot({ user }) {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         placeholder="City"
-                        required
+                    // required
                     />
                 </label>
+
+                {errors.state && (<p className="error-message">{errors.state}</p>)}
 
                 <label className="state-input">
                     State
@@ -98,9 +170,11 @@ function CreateNewSpot({ user }) {
                         value={state}
                         onChange={(e) => setState(e.target.value)}
                         placeholder="STATE"
-                        required
+                    // required
                     />
                 </label>
+
+                {errors.lat && <p className="error-message">{errors.lat}</p>}
 
                 <label className="state-input">
                     Latitude
@@ -108,10 +182,12 @@ function CreateNewSpot({ user }) {
                         type="text"
                         value={lat}
                         onChange={(e) => setLat(e.target.value)}
-                        placeholder="STATE"
-                        required
+                        placeholder="0"
+                    // required
                     />
                 </label>
+
+                {errors.lng && <p className="error-message">{errors.lng}</p>}
 
                 <label className="state-input">
                     Longitude
@@ -119,41 +195,45 @@ function CreateNewSpot({ user }) {
                         type="text"
                         value={lng}
                         onChange={(e) => setLng(e.target.value)}
-                        placeholder="STATE"
-                        required
+                        placeholder="0"
+                    // required
                     />
                 </label>
                 <hr />
-                <label>
+                <label className="description-label">
                     <h2>
                         Describe your place to guests
                     </h2>
                     <p> Mention the best features of your space, any special amentities like
                         fast wif or parking, and what you love about the neighborhood.
                     </p>
+
+                    {errors.description && (<p className="error-message">{errors.description}</p>)}
+
                     <textarea
                         type="text"
                         className="description-input"
                         placeholder="Description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
-                <hr />
+                {/* <hr /> */}
                 <label>
                     <h2>
                         Create a title for your spot
                     </h2>
                     <p>Catch guests' attention with a spot title that highlights what makes
                         your place special.</p>
+                    {errors.name && (<p className="error-message">{errors.name}</p>)}
                     <input
                         type="text"
                         className="spot-input"
                         placeholder="Name of your spot"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
                 <hr />
@@ -163,13 +243,15 @@ function CreateNewSpot({ user }) {
                     </h2>
                     <p> Competitive pricing can help your listing stand out and rank higher
                         in search results. </p>
+
+                    {errors.price && <p className="error-message">{errors.price}</p>}
+
                     <input
                         type="number"
-                        className="price-input"
                         placeholder="Price per night (USD)"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
                 <hr />
@@ -178,13 +260,16 @@ function CreateNewSpot({ user }) {
                         Liven up your spot with photos
                     </h2>
                     <p>Submit a link to at least one photo to publish your spot.</p>
+
+                    {errors.image && <p className="error-message">{errors.image}</p>}
+
                     <input
                         type="text"
                         className="photo-input"
                         placeholder="Preview Image URL"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                        required
+                    // required
                     />
                     <br />
                     <input
@@ -193,7 +278,6 @@ function CreateNewSpot({ user }) {
                         placeholder="Image URL"
                         value={image2}
                         onChange={(e) => setImage2(e.target.value)}
-                        required
                     />
                     <br />
                     <input
@@ -202,7 +286,6 @@ function CreateNewSpot({ user }) {
                         placeholder="Image URL"
                         value={image3}
                         onChange={(e) => setImage3(e.target.value)}
-                        required
                     />
                     <br />
                     <input
@@ -211,7 +294,6 @@ function CreateNewSpot({ user }) {
                         placeholder="Image URL"
                         value={image4}
                         onChange={(e) => setImage4(e.target.value)}
-                        required
                     />
                     <br />
                     <input
@@ -220,12 +302,10 @@ function CreateNewSpot({ user }) {
                         placeholder="Image URL"
                         value={image5}
                         onChange={(e) => setImage5(e.target.value)}
-                        required
                     />
 
                 </label>
-                <hr />
-                <button type="submit">Create Spot</button>
+                <button className='create-spot' type="submit">Create Spot</button>
             </form>
         </>
     );

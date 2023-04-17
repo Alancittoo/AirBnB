@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateSpotThunk } from "../../store/spotsReducer";
 import { useHistory } from "react-router-dom";
 
 const EditSpot = () => {
-  const { spotId } = useParams();
-  const spots = useSelector((state) => state.spots);
-  const id = parseInt(spotId)
-  const spotRess = spots[spotId]
-
   const dispatch = useDispatch();
   const history = useHistory();
+  const { spotId } = useParams();
+  const spots = useSelector((state) => state.spots);
+  const spotRess = spots[spotId]
 
   const [country, setCountry] = useState(spotRess?.country || "");
   const [address, setAddress] = useState(spotRess?.address || "");
@@ -22,7 +20,7 @@ const EditSpot = () => {
   const [description, setDescription] = useState(spotRess?.description || "");
   const [name, setName] = useState(spotRess?.name || "");
   const [image, setImage] = useState([]);
-  const [price, setPrice] = useState(spotRess?.price || 0);
+  const [price, setPrice] = useState(spotRess.price || 0);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
@@ -33,8 +31,8 @@ const EditSpot = () => {
         address,
         city,
         state,
-        lat: Number(lat),
-        lng: Number(lng),
+        lat,
+        lng,
         description,
         name,
         price,
@@ -46,7 +44,7 @@ const EditSpot = () => {
   return (
     <>
       <h1>Edit Spot</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='create-spot-form' onSubmit={handleSubmit}>
         <h4>Where's your place located?</h4>
         <caption>
           Guests will only get your exact address once they booked a
@@ -136,7 +134,7 @@ const EditSpot = () => {
             required
           />
         </label>
-        <label>
+        {/* <label>
           Liven up your spot with photos
           <input
             type="text"
@@ -146,8 +144,8 @@ const EditSpot = () => {
             required
           />
 
-        </label>
-        <button type="submit">Update Spot</button>
+        </label> */}
+        <button className="create-spot" type="submit">Update Spot</button>
       </form>
     </>
   );

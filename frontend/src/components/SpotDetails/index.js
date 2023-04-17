@@ -1,31 +1,47 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotDetailThunk } from "../../store/spotsReducer";
-import { getAllReviewsThunk } from "../../store/reviewReducer";
+import { getAllReviewsThunk, deleteReviewThunk } from "../../store/reviewReducer";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import PostReviewModal from "../Reviews/reviewModal";
+import ConfirmModalReview from "../Reviews/confirmModalReview";
 import "./spotDetails.css";
 import { Link } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 
 const SpotIndex = () => {
+  const sessionUser = useSelector((state) => state.session.user);
   const spotObj = useSelector((state) => state.spots);
   const reviewObj = useSelector((state) => state.reviews);
   const review = Object.values(reviewObj);
   const spot = Object.values(spotObj);
-  const id = useParams();
+  const { spotId } = useParams();
+  const { closeModal } = useModal();
+  const [showMenu, setShowMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  console.log("rev", review);
+
+  let hasReviewd = review.find((rev) => rev.userId === sessionUser?.id);
+
+  const closeMenu = () => setShowMenu(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getSpotDetailThunk(id.spotId));
+    dispatch(getSpotDetailThunk(spotId));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllReviewsThunk(id.spotId));
+    dispatch(getAllReviewsThunk(spotId));
   }, [dispatch]);
 
+  const deleteReview = (e, reviewId) => {
+    e.preventDefault();
+    dispatch(deleteReviewThunk(reviewId));
+    setShowModal(false); // Hide modal when delete is complete
+  };
   const month = [
-    "empty",
+    0,
     "January",
     "February",
     "March",
@@ -43,24 +59,31 @@ const SpotIndex = () => {
   return (
     <>
       {spot.map((oneSpot) => {
+        console.log(oneSpot)
         return (
           <>
-            <h1>{oneSpot.name}</h1>
+            <h1 className="spot-name-h1">{oneSpot.name}</h1>
             <p>
-              {oneSpot.city}, {oneSpot.state}, {oneSpot.country}
+              Location: {oneSpot.city}, {oneSpot.state}, {oneSpot.country}
             </p>
-
-            {oneSpot.SpotImages?.length ? (
-              oneSpot.SpotImages.map((img) => (
-                <img className="spot-detail-images" src={img.url}></img>
-              ))
-            ) : (
-              <img src="https://ftcollinshomes.com/wp-content/uploads/2015/06/nophotoavailable.png"></img>
-            )}
+            <div className="spot-images-styling">
+              <div className="preview-image-div">
+                <img src={oneSpot.SpotImages?.[0]?.url}></img>
+              </div>
+              <div className="spot-images-div">
+                {oneSpot.SpotImages?.length ? (
+                  oneSpot.SpotImages.slice(1).map((img) => (
+                    <img className="spot-detail-images" src={img.url}></img>
+                  ))
+                ) : (
+                  <img src=""></img>
+                )}
+              </div>
+            </div>
             <div className="wrapper-info-reserve">
               <div className="spot-info-div">
                 <h4>
-                  Hosted by {oneSpot.Owner?.firstName}{" "}
+                  Hosted by: {oneSpot.Owner?.firstName}{" "}
                   {oneSpot.Owner?.lastName}
                 </h4>
                 <p>{oneSpot.description}</p>
@@ -68,39 +91,109 @@ const SpotIndex = () => {
               <div className="reserve-button-div">
                 <div className="price-div">
                   <p>${oneSpot.price} night</p>
-                  <p>★ {oneSpot.avgStarRating}</p>
+                  <p>★ {oneSpot.avgRating !== null && !isNaN(oneSpot.avgRating)
+                    ? oneSpot.avgRating
+                    : 'New'}</p>
                   <p>Reviews: {oneSpot.numReviews}</p>
                 </div>
                 <button
                   className="reserve-button"
-                  onClick = {() =>  alert('feature coming soon')}
+                  onClick={() => alert("Feature coming soon")}
                 >
-                  Reserve Ass
+                  Reserve
                 </button>
               </div>
             </div>
             <hr />
+            {oneSpot.avgStarRating !== 0 ? (
+              <>
 
-            <p>★ {oneSpot.avgStarRating}</p>
-            <p>Reviews: {oneSpot.numReviews}</p>
-            <div className="spot-reviews">
-              {review.map((oneReview) => {
-                const reviewMonth = oneReview.createdAt.split("")[6];
-                const year = oneReview.createdAt.split("-")[0];
-                return (
-                  <>
-                    <div>
-                      <p>{oneReview.User.firstName}</p>
-                      <p>
-                        {month[reviewMonth]}, {year}
-                      </p>
-                      <p>{oneReview.review}</p>
-                      <p>★{oneReview.stars}</p>
-                    </div>
-                  </>
-                );
-              })}
-            </div>
+                <div className="review-info-block">
+                  <div review-in-block-rating>★ {spot.avgRating !== null && !isNaN(spot.avgRating)
+                    ? spot.avgRating
+                    : 'New'}</div>
+                  <div>·</div>
+                  {oneSpot.numReviews === 1 ? (
+                    <div>{oneSpot.numReviews} review</div>
+                  ) : (
+                    <div>{oneSpot.numReviews} reviews</div>
+                  )}
+                </div>
+                <br />
+                {sessionUser?.id !== oneSpot.ownerId &&
+                  sessionUser &&
+                  !hasReviewd && (
+                    <button className="post-your-review-btn">
+                    <OpenModalMenuItem
+                    className='post-your-review-btn'
+                      itemText="Post Your Review"
+                      modalComponent={<PostReviewModal spotId={oneSpot.id} />}
+                      buttonClassName="modal-component"
+                    />
+                    </button>
+                  )}
+                <div className="spot-reviews">
+                  {review.length > 0 &&
+                    review.map((oneReview) => {
+                      //console.log("ONEREVIE ==>", oneReview)
+                      const reviewMonth = oneReview.createdAt?.split("")[6];
+                      const year = oneReview.createdAt?.split("-")[0];
+                      return (
+                        <>
+                          <div className="spot-review">
+                            <p>{oneReview.User?.firstName}</p>
+                            <p>
+                              {month[reviewMonth]}, {year}
+                            </p>
+                            <p>{oneReview?.review}</p>
+                            <p>★ {oneReview?.stars}</p>
+                            {sessionUser?.id === oneReview.User?.id && (
+                              <>
+                                <button
+                                  className="delete-review-in-spot"
+                                  onClick={() => setShowModal(true)}
+                                >
+                                  <OpenModalMenuItem
+                                    itemText="Delete"
+                                    onItemClick={closeMenu}
+                                    modalComponent=
+                                    {<ConfirmModalReview
+                                      onModalClose={closeModal}
+                                      reviewId={oneReview.id}
+                                      onDelete={(e) => deleteReview(e, oneReview.id)}
+                                    />}
+                                  />
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </>
+                      );
+                    })}
+                </div>
+              </>
+            ) : (
+              <>
+                <h3>★ New</h3>
+                {sessionUser?.id !== oneSpot.ownerId && sessionUser && (
+                  <div className='post-your-review-btn'>
+                    <button>
+                  <OpenModalMenuItem
+                    className='post-your-review-btn'
+                    itemText="Post Your Review"
+                    modalComponent={
+                      <PostReviewModal
+                        spotId={oneSpot.id}
+                        onModalClose={closeModal}
+                      />
+                    }
+                    buttonClassName="modal-component"
+                  />
+                  </button>
+                  </div>
+                )}
+              </>
+            )}
           </>
         );
       })}

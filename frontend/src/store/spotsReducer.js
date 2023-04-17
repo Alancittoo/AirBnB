@@ -42,6 +42,23 @@ export const editSpotAction = (spots) => ({
   spots,
 });
 
+export const thunkCreateImg = (spotId, img) => async (dispatch) => {
+  console.log('spotId', spotId)
+  console.log('spotId', spotId)
+  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    headers: {
+      'Content-Type' : "application/json",
+
+    },
+    "body": JSON.stringify(img)
+  })
+  if (res.ok){
+  const spot = await res.json()
+  return spot
+  }
+}
+
 export const thunkGetAllSpots = () => async (dispatch) => {
   const res = await csrfFetch("/api/spots");
   const spots = await res.json();
@@ -122,21 +139,22 @@ export const createNewSpotThunk =
       }),
     });
     const newSpot = await res.json();
-    const res2 = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url: image, preview: true }),
-    });
-    if (res2.ok) {
-      dispatch(createNewSpotAction(newSpot));
-      // history.push(`/spot/${id}`)
-      return newSpot;
-    } else {
-      const errors = await res.json();
-      return errors;
-    }
+    // const res2 = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ url: image, preview: true }),
+    // });
+    // if (res2.ok) {
+    //   dispatch(createNewSpotAction(newSpot));
+    //   // history.push(`/spot/${id}`)
+    //   return newSpot;
+    // } else {
+    //   const errors = await res.json();
+    //   return errors;
+    // }
+    return newSpot
   };
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
@@ -182,3 +200,63 @@ const spotsReducer = (state = initialState, action) => {
 };
 
 export default spotsReducer;
+
+
+
+// export const createNewSpotThunk =
+  // ({
+  //   country,
+  //   address,
+  //   city,
+  //   state,
+  //   lat,
+  //   lng,
+  //   description,
+  //   name,
+  //   price,
+  // }) =>
+  // async (dispatch) => {
+  //   const res = await csrfFetch("/api/spots", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       country,
+  //       address,
+  //       city,
+  //       state,
+  //       lat,
+  //       lng,
+  //       description,
+  //       name,
+  //       price,
+  //     }),
+  //   });
+  //   const newSpot = await res.json();
+  //   if (res.ok) {
+  //     dispatch(createNewSpotAction(newSpot));
+  //     // history.push(`/spot/${id}`)
+  //     return newSpot;
+  //   } else {
+  //     const errors = await res.json();
+  //     return errors;
+  //   }
+  // };
+
+  // export const thunkCreateImg = (spotId, img) => async (dispatch) => {
+  //   console.log('spotId', spotId)
+  //   console.log('img', img)
+  //   const res = await csrfFetch(`/api/spot/${spotId}/images`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type' : "application/json",
+
+  //     },
+  //     "body": JSON.stringify(img)
+  //   })
+  //   if (res.ok){
+  //   const spot = await res.json()
+  //   return spot
+  //   }
+  // }

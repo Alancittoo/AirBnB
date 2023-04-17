@@ -191,7 +191,7 @@ router.post('/', restoreUser, requireAuth, async(req, res)=>{
         lng,
         name,
         description,
-        price
+        price,
     })
 
 

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const SpotsIndex = () => {
   const spotsObj = useSelector((state) => state.spots);
   const spots = Object.values(spotsObj);
-  //console.log("image check", spots);
+  console.log('spots:', spots)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(thunkGetAllSpots());
@@ -22,30 +22,29 @@ const SpotsIndex = () => {
         {spots.map((spot) => {
           return (
             <>
-              <div className="spots-div">
+              <div className="spots-div" data-tooltip={spot.name}>
                 <Link className='tool' to={`/spot/${spot.id}`}>
                   {spot.previewImage !== "No Preview Image Available" ? (
                     <img className="tooltip" src={spot.previewImage}></img>
                   ) : (
-                    <img  src="https://ftcollinshomes.com/wp-content/uploads/2015/06/nophotoavailable.png"></img>
+                    <img  src=""></img>
                   )}
                   <div className="spot-wrapper-div">
                     <div className="spot-info">
                       <div key={spot.id} className="spot-location">
                         {/* {spot.name},  */}
-                        {spot.city},
-                        {spot.state}
+                        {spot.city}{", "}{spot.state}
                       </div>
-                      <div>
+                      <div className="spot-price">
                         ${spot.price} night
                       </div>
                     </div>
-
-                    <div>
+                    {console.log(spot.avgRating)}
+                    <div className="rating-spots">
                       <p>★ {" "}
-                      {spot.avgRating !== "No Reviews exist for this spot"
+                      {spot.avgRating !== null && !isNaN(spot.avgRating)
                         ? spot.avgRating
-                        : "New"}
+                        : 'New'}
                         </p>
                     </div>
                   </div>

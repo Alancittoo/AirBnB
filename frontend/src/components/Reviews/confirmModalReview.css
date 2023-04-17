@@ -1,0 +1,56 @@
+.confirmModalReview-div {
+    background-color: #fff;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    text-align: center;
+    width: 400px;
+    border-radius: 10px;
+  }
+
+  .confirmModalReview-div h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  .confirmModalReview-div p {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  .confirmModalReview-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .confirmModalReview-yes {
+    background-color: #ff4136;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    transition: background-color 0.2s ease-in-out;
+    border: black 1px solid;
+
+  }
+
+  .confirmModalReview-yes:hover {
+    background-color: #d50000;
+  }
+
+  .confirmModalReview-no {
+    background-color: #ddd;
+    border: black 1px solid;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .confirmModalReview-no:hover {
+    background-color: #ccc;
+  }

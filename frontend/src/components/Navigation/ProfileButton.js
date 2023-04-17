@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 import { Link } from "react-router-dom";
-import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from './OpenModalMenuItem';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
-import './ProfileButton.css'
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -26,42 +27,51 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
-  let ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push("/")
   };
 
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
-      <button className='profile-button' onClick={openMenu}>
-      ≡ <i className="fas fa-user-circle" />
+      <button onClick={openMenu} className="profile-button">
+      <i class="fa-solid fa-bars"></i><i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>Hello {user.username}</li>
-            <hr />
-            {/* <li>{user.firstName} {user.lastName}</li> */}
-            <li>{user.email}</li>
-            <hr />
+          <div className="inside-contents-dropdown">
             <li>
-              <Link className='manage'to={"/spots/current"}>Manage Spots</Link>
+              Hello, {user.firstName}
+              {/* {user.lastName} */}
             </li>
 
-            <li>
-              <button onClick={logout}>Log Out</button>
+            <li>{user.email}</li>
+            <hr />
+            <li onClick={closeMenu}>
+              <Link to={"/spots/current"}>Manage Spots</Link>
             </li>
-          </>
+            <hr/>
+            <li onClick={closeMenu}>
+              <Link to={"/reviews/current"}>Manage Reviews</Link>
+            </li>
+            <hr />
+            <li>
+              <button className="logout-button" onClick={logout}>
+                Log Out
+              </button>
+            </li>
+            </div>
         ) : (
           <>
             <OpenModalMenuItem

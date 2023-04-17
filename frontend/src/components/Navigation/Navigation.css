@@ -2,6 +2,10 @@
   display: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 ul {
   display: flex;
   justify-content: space-between;
@@ -9,6 +13,20 @@ ul {
   padding: 0px;
   margin-left: 0px;
   margin-right: 0px;
+}
+
+.profile-dropdown {
+  border: 1px solid black;
+  background-color: rgb(251, 251, 251);
+  border-radius: 5px;
+  position: absolute;
+  top: 60px;
+  width: 125px;
+  padding: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  z-index: 1;
 }
 
 .home-button {
@@ -20,31 +38,46 @@ ul {
 
 .profile-button {
   display: flex;
+  width: 75px;
   justify-content: center;
   margin-right: 10px;
   border-radius: 50px;
-  border: black solid 1px;
+  padding: 5px;
+  cursor: pointer;
+  /* border: black solid 1px; */
 }
 .profile-button li {
-  display: flex;
-  flex-direction:row;
+  display: grid;
   margin-right: 10px;
 }
 
-.navlink-home {
-  display:flex;
-  flex-direction: row;
+/* for other button not on this nav file */
+.logout-button {
+  display: flex;
+  justify-content: center;
+  border-radius: 25px;
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+}
+.logout-button:hover{
+  background-color: red;
 }
 
 .navlink-home {
-  text-decoration: none;
-  padding: 5px;
-}
-
-.logo-text {
   display: flex;
   align-items: center;
-  font-weight: bold;
+  text-decoration: none;
+  color: #000000;
+}
+
+
+.logo-text {
+  /* border: 1px black solid; */
+  display: flex;
+  align-items: center;
+  font-weight: bolder;
+  font-family:cursive;
   font-size: 20px;
   width:100px;
   margin-left: 10px;
@@ -54,17 +87,26 @@ ul {
 
 .loggedin-container {
   display: flex;
-  flex-direction:column-reverse;
+  align-items: center;
+  margin: 10px;
+  justify-content: flex-end;
 }
 
 .create-spot-link-container {
-  margin-top: 17px;
-  border: solid 1px black
+  margin-top: 33px;
+  justify-content: center;
 }
 
 .navbar-create-spot {
+  font-size: 1rem;
+  padding-right: 15px;
+  font-weight: bold;
   text-decoration: none;
-  color:  black
+  color: #000000;
+}
+
+.navbar-create-spot:hover {
+  color: red;
 }
 
 /* .create-spot {
@@ -72,9 +114,18 @@ ul {
 } */
 
 .navigation-bar {
-  font-family: 'Noto Sans Osage', sans-serif;
+  display: flex;
 }
 
-.manage {
-  text-decoration: none;
-}
+
+/* .profile-button {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+} */
+
+/* .profile-button-div {
+  display: flex;
+  justify-content: flex-end;
+} */

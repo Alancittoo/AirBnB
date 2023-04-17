@@ -1,13 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentSpotsThunk, deleteSpotThunk } from "../../store/spotsReducer";
 import { Link } from "react-router-dom";
-
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import "./userSpots.css";
+import UserSpotModal from "./userSpotModal";
+import { useModal } from "../../context/Modal";
+
 
 const UserSpots = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
   const spotsObj = useSelector((state) => state.spots);
   const spots = Object.values(spotsObj);
+  const { closeModal } = useModal();
+
+  const closeMenu = () => setShowMenu(false);
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,7 +31,7 @@ const UserSpots = () => {
   return (
     <>
       <h1>Manage Your Spots</h1>
-      <div className="wrapper-div">
+      <div className="wrapper-div-user-spot">
         {spots.map((spot) => {
           return (
             <>
@@ -43,16 +52,25 @@ const UserSpots = () => {
 
                     <div>
                       ★{" "}
-                      {spot.avgRating !== "No Reviews exist for this spot"
+                      {spot.avgRating !== null && !isNaN(spot.avgRating)
                         ? spot.avgRating
-                        : "New"}
+                        : 'New'}
                     </div>
                   </div>
                 </Link>
                 <Link to={`/spots/${spot.id}/edit`}>
-                  <button>Update</button>
+                  <button className="delete-review-in-spot">Update</button>
                 </Link>
-                <button onClick={(e) => deleteSpot(e, spot.id)}>Delete</button>
+                <button className="delete-review-in-spot"><OpenModalMenuItem
+                                    itemText="Delete"
+                                    onItemClick={closeMenu}
+                                    modalComponent=
+                                    {<UserSpotModal
+                                      onModalClose={closeModal}
+                                      spotId={spot.id}
+                                      onDelete={(e) => deleteSpot(e, spot.id)}
+                                    />}
+                                  /></button>
               </div>
             </>
           );
