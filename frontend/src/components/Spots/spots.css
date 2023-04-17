@@ -82,7 +82,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   text-decoration: none;
-  background-color: #A9A9 ;
+  max-width: 1024px;
   }
 
   .wrapper-div .spots-div {
@@ -95,33 +95,26 @@
   .spots-div:hover::before {
   position: absolute;
   content: attr(data-tooltip);
-  color: #484848;
-  z-index: 1;
+  color: black;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
   text-decoration: none;
   padding: 8px;
   font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
+  z-index: 5;
   border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.2s ease-in-out;
+  border: 1px black solid;
   }
 
-  .tool {
-  text-decoration: none;
-  position: relative;
-  }
-
-  .tool:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
-  }
-
-  .rating-spots {
-
+  @media (max-width: 1124px) {
+    .wrapper-div {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .spot-wrapper-div {
+      width: 300px;
+    }
+    .spots-div img {
+      width: 250px;
+      height: 200px;
+    }
   }

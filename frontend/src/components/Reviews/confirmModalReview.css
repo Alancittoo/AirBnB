@@ -55,15 +55,9 @@
     background-color: #ccc;
   }
 
-  @media screen and (max-width: 1024px) {
-    body {
-      max-width: 1000px; /* set the maximum width of the body element */
-      margin: 0 auto; /* center the content horizontally */
-      overflow-x: hidden; /* hide horizontal scrollbar */
+  @media (max-width: 1024px) {
+    * {
+      box-sizing: border-box;
+      max-width: 100%;
     }
-  }
-
-  * {
-    max-width: 1024px;
-    margin: 0 auto;
   }
