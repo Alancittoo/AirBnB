@@ -109,8 +109,8 @@ const SpotIndex = () => {
               <>
 
                 <div className="review-info-block">
-                  <div review-in-block-rating>★ {spot.avgRating !== null && !isNaN(spot.avgRating)
-                    ? spot.avgRating
+                  <div review-in-block-rating>★ {oneSpot.avgRating !== null && !isNaN(oneSpot.avgRating)
+                    ? oneSpot.avgRating
                     : 'New'}</div>
                   <div>·</div>
                   {oneSpot.numReviews === 1 ? (
