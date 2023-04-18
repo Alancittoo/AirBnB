@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import ConfirmModalReview from "./confirmModalReview";
 import { useModal } from "../../context/Modal";
-import { deleteReviewThunk, getCurrentUserReviewsThunk } from "../../store/reviewReducer";
+import { thunkGetCurrentReviews, thunkDeleteReview } from "../../store/reviewReducer";
 import './review.css'
 
 const ReviewIndex = () => {
@@ -20,7 +20,7 @@ const ReviewIndex = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCurrentUserReviewsThunk());
+    dispatch(thunkGetCurrentReviews());
   }, [dispatch]);
 
   const month = [
@@ -41,7 +41,7 @@ const ReviewIndex = () => {
 
   const deleteReview = (e, reviewId) => {
     e.preventDefault()
-    dispatch(deleteReviewThunk(reviewId))
+    dispatch(thunkDeleteReview(reviewId))
     setShowModal(false); // Hide modal when delete is complete
   }
 

@@ -1,41 +1,44 @@
 import { csrfFetch } from "./csrf";
 
 export const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
-export const LOAD_REVIEW_DETAIL = "reviews/LOAD_REVIEW_DETAIL";
 export const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 export const DELETE_REVIEW = "reviews/DELETE_REVIEW";
 export const CURRENT_USER_REVIEWS = "reviews/CURRENT_USER_REVIEWS";
 
-export const loadReviewsAction = (reviews) => ({
+export const loadReviews = (reviews) => ({
   type: LOAD_REVIEWS,
   reviews,
 });
 
-export const createReviewAction = (review) => ({
+export const createReview = (review) => ({
   type: CREATE_REVIEW,
   review,
 });
 
-export const deleteReviewAction = (review) => ({
+export const deleteReview = (review) => ({
   type: DELETE_REVIEW,
   review,
 });
 
-export const loadCurrentUserReviewsAction = (reviews) => ({
+export const loadCurrentUserReviews = (reviews) => ({
   type: CURRENT_USER_REVIEWS,
   reviews,
 });
 
 
-
-
 export const getAllReviewsThunk = (spotId) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
   const reviews = await res.json();
-  await dispatch(loadReviewsAction(reviews.Reviews));
+  await dispatch(loadReviews(reviews.Reviews));
 };
 
-export const createReviewThunk = (review) => async (dispatch) => {
+export const thunkGetCurrentReviews = () => async (dispatch) => {
+  const res = await csrfFetch("/api/reviews/current");
+  const reviews = await res.json();
+  await dispatch(loadCurrentUserReviews(reviews.Reviews));
+};
+
+export const thunkCreateReview = (review) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${review.spotId}/reviews`, {
     method: "POST",
     headers: {
@@ -46,7 +49,7 @@ export const createReviewThunk = (review) => async (dispatch) => {
 
   if (res.ok) {
     const newReview = await res.json();
-    dispatch(createReviewAction(newReview));
+    dispatch(createReview(newReview));
     return newReview;
   } else {
     const errors = await res.json();
@@ -54,24 +57,20 @@ export const createReviewThunk = (review) => async (dispatch) => {
   }
 };
 
-export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+export const thunkDeleteReview = (reviewId) => async (dispatch) => {
   const res = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: "DELETE",
   });
 
   if (res.ok) {
-    dispatch(deleteReviewAction(reviewId));
+    dispatch(deleteReview(reviewId));
   } else {
     const errors = await res.json();
     return errors;
   }
 };
 
-export const getCurrentUserReviewsThunk = () => async (dispatch) => {
-  const res = await csrfFetch("/api/reviews/current");
-  const reviews = await res.json();
-  await dispatch(loadCurrentUserReviewsAction(reviews.Reviews));
-};
+
 
 const initialState = {};
 

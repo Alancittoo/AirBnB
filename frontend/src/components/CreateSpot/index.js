@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewSpotThunk, thunkCreateImg } from "../../store/spotsReducer";
+import { thunkCreateSpot, thunkCreateImg } from "../../store/spotsReducer";
 import { useHistory } from "react-router-dom";
 import './createSpot.css'
 
@@ -76,7 +76,7 @@ function CreateNewSpot({ user }) {
 
         if (Object.keys(errors).length === 0) {
             dispatch(
-                createNewSpotThunk({
+                thunkCreateSpot({
                     country,
                     address,
                     city,

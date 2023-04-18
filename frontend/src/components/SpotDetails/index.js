@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSpotDetailThunk } from "../../store/spotsReducer";
-import { getAllReviewsThunk, deleteReviewThunk } from "../../store/reviewReducer";
+import { thunkGetSpotDetail } from "../../store/spotsReducer";
+import { getAllReviewsThunk, thunkDeleteReview } from "../../store/reviewReducer";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import PostReviewModal from "../Reviews/reviewModal";
 import ConfirmModalReview from "../Reviews/confirmModalReview";
 import "./spotDetails.css";
-import { Link } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 
 const SpotIndex = () => {
@@ -28,7 +27,7 @@ const SpotIndex = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getSpotDetailThunk(spotId));
+    dispatch(thunkGetSpotDetail(spotId));
   }, [dispatch]);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const SpotIndex = () => {
 
   const deleteReview = (e, reviewId) => {
     e.preventDefault();
-    dispatch(deleteReviewThunk(reviewId));
+    dispatch(thunkDeleteReview(reviewId));
     setShowModal(false); // Hide modal when delete is complete
   };
   const month = [

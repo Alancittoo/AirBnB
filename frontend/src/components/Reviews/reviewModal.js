@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createReviewThunk } from "../../store/reviewReducer";
+import { thunkCreateReview } from "../../store/reviewReducer";
 import { useModal } from "../../context/Modal";
 import "./reviewModal.css";
 
@@ -33,7 +33,7 @@ const PostReviewModal = ({ spotId, onModalClose }) => {
     e.preventDefault();
 
     dispatch(
-      createReviewThunk({
+      thunkCreateReview({
         spotId,
         stars: stars.filter((star) => star).length, // Count number filled stars
         review,

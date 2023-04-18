@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentSpotsThunk, deleteSpotThunk } from "../../store/spotsReducer";
+import { thunkGetCurrentSpots, deleteSpotThunk } from "../../store/spotsReducer";
 import { Link } from "react-router-dom";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import "./userSpots.css";
@@ -20,7 +20,7 @@ const UserSpots = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCurrentSpotsThunk());
+    dispatch(thunkGetCurrentSpots());
   }, [dispatch]);
 
   const deleteSpot = (e, spotId) => {

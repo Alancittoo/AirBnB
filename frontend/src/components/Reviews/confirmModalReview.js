@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { deleteReviewThunk, getCurrentUserReviewsThunk } from "../../store/reviewReducer";
+import { thunkDeleteReview, getCurrentUserReviewsThunk } from "../../store/reviewReducer";
 import "./confirmModalReview.css";
 
 const ConfirmModalReview = ({ reviewId, onModalClose, onDelete }) => {
@@ -7,7 +7,7 @@ const ConfirmModalReview = ({ reviewId, onModalClose, onDelete }) => {
 
     const handleConfirm = () => {
     onModalClose();
-    dispatch(deleteReviewThunk(reviewId));
+    dispatch(thunkDeleteReview(reviewId));
   };
 
   return (
