@@ -1,0 +1,88 @@
+.create-spot-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+}
+
+.create-spot {
+  display: flex;
+  justify-content: center;
+  margin-left: 25px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 12px 24px;
+  background-color: rgb(228, 60, 60);
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+
+  font-size: 16px;
+
+}
+
+.description-label p {
+  width: 80%;
+}
+
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 32px;
+  }
+
+  .create-spot-form {
+    background-color: #A9A9;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px;
+    border: 2px solid black;
+
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  .create-spot-form label {
+    display: block;
+    margin-bottom: 16px;
+    font-weight: bold;
+
+  }
+
+  .create-spot-form input[type="text"], .create-spot-form input[type="number"]
+  .create-spot-form textarea {
+    border: 2px black solid;
+
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: inherit;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    padding: 5px;
+    margin-left: 15px;
+  }
+
+  .create-spot-form textarea {
+    border: 2px black solid;
+    width: 700px;
+    height: 300px;
+    margin-left: -5px;
+  }
+
+
+
+  .create-spot-form button:hover {
+    background-color: #006d75;
+  }
+
+  .create-spot-form .error-message {
+    color: red;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }

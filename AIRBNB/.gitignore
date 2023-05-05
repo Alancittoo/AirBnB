@@ -1,0 +1,7 @@
+# where potential information may be, so do not push these files
+
+node_modules
+.env
+build
+.DS_Store
+*.db
