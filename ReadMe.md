@@ -4,6 +4,19 @@ This is just a clone off airBnb, the live link is here: https://app-academy-airb
 # The landing Page
 ![Screenshot 2023-04-17 052432](https://user-images.githubusercontent.com/98733614/232442956-4d0f8dd7-8875-41ea-8dcd-2e39eb2b2ab5.png)
 
+# 1 Single Spot
+![image](https://github.com/Alancittoo/AirBnB/assets/98733614/da2f0d00-c9d5-4f34-939f-9ae4a5c7250b)
+
+# Managing Spots
+![image](https://github.com/Alancittoo/AirBnB/assets/98733614/4189d725-3590-4a7c-8524-670fb3f6c45d)
+
+# Managing Reviews
+![image](https://github.com/Alancittoo/AirBnB/assets/98733614/c4a8cbab-0ef3-4213-a640-804f76a133e1)
+
+# Creating a Spot
+![image](https://github.com/Alancittoo/AirBnB/assets/98733614/71a504e0-9e3a-486f-aacc-18e47fe57927)
+![image](https://github.com/Alancittoo/AirBnB/assets/98733614/a8d06750-868e-431a-af21-39e2d8ed18ee)
+
 
 ## Database Schema Design
 <img width="742" alt="airbnb_dbdiagram" src="https://user-images.githubusercontent.com/98733614/232441999-a913e1c1-d4fb-4fbc-ab84-78d4d81f6911.png">
