@@ -1,7 +1,7 @@
 # AirBnB Clone
 This is just a clone off airBnb, the live link is here: https://app-academy-airbnb-hn0e.onrender.com
 
-# This is the landing Page
+# The landing Page
 ![Screenshot 2023-04-17 052432](https://user-images.githubusercontent.com/98733614/232442956-4d0f8dd7-8875-41ea-8dcd-2e39eb2b2ab5.png)
 
 
