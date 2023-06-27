@@ -9,6 +9,7 @@ import UserSpots from "./components/SpotDetails/usersSpot";
 import CreateNewSpot from "./components/CreateSpot";
 import EditSpot from "./components/UpdateSpot/index";
 import ReviewIndex from "./components/Reviews";
+import BookingsIndex from "./components/Bookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route exact path={"/reviews/current"}>
             <ReviewIndex />
+          </Route>
+          <Route exact path={"/bookings/current"}>
+            <BookingsIndex />
           </Route>
           <Route>Page Not found</Route>
         </Switch>

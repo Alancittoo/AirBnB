@@ -3,12 +3,14 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import spotsReducer from "./spotsReducer";
 import reviewsReducer from "./reviewReducer";
+import bookingsReducer from "./bookingsReducer";
 
 //MONEY MAKER
 const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotsReducer,
-  reviews: reviewsReducer
+  reviews: reviewsReducer,
+  bookings: bookingsReducer
 });
 
 let enhancer;
@@ -27,3 +29,12 @@ const configureStore = (preloadedState) => {
 };
 
 export default configureStore;
+
+// {bookings.map((booking) => (
+//   <div key={booking.id}>
+//       <h2>Booking ID: {booking.id}</h2>
+//       <p>Spot ID: {booking.spotId}</p>
+//       <p>Start Date: {new Date(booking.startDate).toLocaleDateString()}</p>
+//       <p>End Date: {new Date(booking.endDate).toLocaleDateString()}</p>
+//   </div>
+// ))}

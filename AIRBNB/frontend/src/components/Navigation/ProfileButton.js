@@ -66,11 +66,16 @@ function ProfileButton({ user }) {
               <Link to={"/reviews/current"}>Manage Reviews</Link>
             </li>
             <hr />
+            <li onClick={closeMenu}>
+              <Link to={"/bookings/current"}>Manage Bookings</Link>
+            </li>
+            <hr />
             <li>
               <button className="logout-button" onClick={logout}>
                 Log Out
               </button>
             </li>
+
             </div>
         ) : (
           <>

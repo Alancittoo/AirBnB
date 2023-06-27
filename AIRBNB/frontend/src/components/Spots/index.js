@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const SpotsIndex = () => {
   const spotsObj = useSelector((state) => state.spots);
   const spots = Object.values(spotsObj);
-  console.log('spots:', spots)
+  // console.log('spots:', spots)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(thunkGetAllSpots());

@@ -78,19 +78,34 @@
   }
 
   .wrapper-div {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  text-decoration: none;
-  max-width: 1024px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    text-decoration: none;
+    /* max-width: 1024px; */
+    margin: auto;
+    /* margin-right: 1000px; */
   }
 
-  .wrapper-div .spots-div {
+
+
+  /* .wrapper-div .spots-div {
   position: relative;
   text-decoration: none;
   width: 100%;
   padding: 0px 10px;
+  } */
+
+  .spots-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 0px 10px;
   }
+
 
   .spots-div:hover::before {
   position: absolute;

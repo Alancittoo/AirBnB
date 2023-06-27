@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
-import { thunkDeleteReview, getCurrentUserReviewsThunk } from "../../store/reviewReducer";
-import "./confirmModalReview.css";
+import { thunkDeleteBooking } from "../../store/bookingsReducer";
+// import "./confirmModalReview.css";
 
-const ConfirmModalReview = ({ reviewId, onModalClose, onDelete }) => {
+const ConfirmModalBooking = ({ bookingId, onModalClose, onDelete }) => {
     const dispatch = useDispatch()
 
     const handleConfirm = () => {
     onModalClose();
-    dispatch(thunkDeleteReview(reviewId));
+    dispatch(thunkDeleteBooking(bookingId));
   };
 
   return (
@@ -16,14 +16,14 @@ const ConfirmModalReview = ({ reviewId, onModalClose, onDelete }) => {
       <p>Are you sure you want to delete this review?</p>
       <div className="confirmModalReview-buttons">
         <button className="confirmModalReview-yes" onClick={handleConfirm}>
-          Yes (Delete Review)
+          Yes (Delete Booking)
         </button>
         <button className="confirmModalReview-no" onClick={onModalClose}>
-          No (Keep Review)
+          No (Keep Booking)
         </button>
       </div>
     </div>
   );
 };
 
-export default ConfirmModalReview;
+export default ConfirmModalBooking;

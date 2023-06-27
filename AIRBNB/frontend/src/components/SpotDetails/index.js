@@ -8,6 +8,7 @@ import PostReviewModal from "../Reviews/reviewModal";
 import ConfirmModalReview from "../Reviews/confirmModalReview";
 import "./spotDetails.css";
 import { useModal } from "../../context/Modal";
+import BookingModal from "../Bookings/createBooking";
 
 const SpotIndex = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -97,9 +98,14 @@ const SpotIndex = () => {
                 </div>
                 <button
                   className="reserve-button"
-                  onClick={() => alert("Feature coming soon")}
+                  // onClick={() => alert("Feature coming soon")}
                 >
-                  Reserve
+                <OpenModalMenuItem
+                  itemText="Reserve"
+                  buttonClassName='reserve-button'
+                  modalComponent={<BookingModal spotId={oneSpot.id}/>}
+                />
+                  {/* Reserve */}
                 </button>
               </div>
             </div>

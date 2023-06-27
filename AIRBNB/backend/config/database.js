@@ -3,11 +3,14 @@ const config = require('./index');
 
 module.exports = {
   development: {
-    storage: config.dbFile,
+    storage: process.env.DB_FILE,
     dialect: "sqlite",
     seederStorage: "sequelize",
+    benchmark: true,
     logQueryParameters: true,
-    typeValidation: true
+    typeValidation: true,
+    // logging: false
+
   },
   production: {
     use_env_variable: 'DATABASE_URL',
