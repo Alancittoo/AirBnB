@@ -44,7 +44,7 @@ const SpotsIndex = () => {
                           ${spot.price} night
                         </div>
                       </div>
-                      {console.log(spot.avgRating)}
+                      {/* {console.log(spot.avgRating)} */}
                       <div className="rating-spots">
                         <p>★ {" "}
                           {spot.avgRating !== null && !isNaN(spot.avgRating)

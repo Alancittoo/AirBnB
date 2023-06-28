@@ -92,8 +92,8 @@ function CreateNewSpot({ user }) {
                 .then((newSpot) => {
                     const newImages = [image, image2, image3, image4, image5]
                     for (let i = 0; i < newImages.length; i++) {
-                        console.log('IMAGES', newImages[i])
-                        console.log('Increment', i)
+                        // console.log('IMAGES', newImages[i])
+                        // console.log('Increment', i)
                         dispatch(thunkCreateImg(newSpot.id, {url: newImages[i], preview: 1}))
                     }
                     history.push(`/spot/${newSpot.id}`)
@@ -101,7 +101,7 @@ function CreateNewSpot({ user }) {
 
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log("Error response data:", data);
+                    // console.log("Error response data:", data);
                 });
         }
     };

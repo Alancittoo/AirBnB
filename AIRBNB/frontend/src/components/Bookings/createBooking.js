@@ -24,10 +24,10 @@ const BookingModal = ({ spotId }) => {
 
     const res = await dispatch(thunkCreateBooking(booking));
     if (!res.errors) {
-        console.log("CREATEBOOKING PASS")
+        // console.log("CREATEBOOKING PASS")
         closeModal();
     } else {
-        console.log("CREATEBOOKING FAIL")
+        // console.log("CREATEBOOKING FAIL")
     }
   };
 

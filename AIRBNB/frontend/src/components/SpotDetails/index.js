@@ -22,7 +22,13 @@ const SpotIndex = () => {
   const [showModal, setShowModal] = useState(false);
 
 
-  let hasReviewd = review.find((rev) => rev.userId === sessionUser?.id);
+  // let hasReviewd = review.find((rev) => rev.userId === sessionUser?.id);
+
+  const [hasReviewed, setHasReviewed] = useState(false);
+
+useEffect(() => {
+  setHasReviewed(!!review.find((rev) => rev.userId === sessionUser?.id));
+}, [review, sessionUser?.id]);
 
   const closeMenu = () => setShowMenu(false);
 
@@ -59,7 +65,7 @@ const SpotIndex = () => {
   return (
     <>
       {spot.map((oneSpot) => {
-        console.log(oneSpot)
+        // console.log(oneSpot)
         return (
           <>
             <h1 className="spot-name-h1">{oneSpot.name}</h1>
@@ -127,7 +133,7 @@ const SpotIndex = () => {
                 <br />
                 {sessionUser?.id !== oneSpot.ownerId &&
                   sessionUser &&
-                  !hasReviewd && (
+                  !hasReviewed && (
                     <button className="post-your-review-btn">
                     <OpenModalMenuItem
                     className='post-your-review-btn'

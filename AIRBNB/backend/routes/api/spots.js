@@ -237,7 +237,7 @@ router.post('/:spotId/images', restoreUser, requireAuth, async(req, res) => {
         preview
     })
 
-    console.log(spotIdObj.spotId)
+    // console.log(spotIdObj.spotId)
 
     res.status(200);
     res.json({

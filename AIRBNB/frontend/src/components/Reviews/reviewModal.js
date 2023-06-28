@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { thunkCreateReview } from "../../store/reviewReducer";
+import { thunkCreateReview, thunkGetCurrentReviews } from "../../store/reviewReducer";
 import { useModal } from "../../context/Modal";
 import "./reviewModal.css";
 
@@ -8,7 +8,9 @@ const PostReviewModal = ({ spotId, onModalClose }) => {
   const dispatch = useDispatch();
 
   const [stars, setStars] = useState([false, false, false, false, false]);
-  const [reviewStar, setReviewStar] = useState(0);
+  const [clickedStars, setClickedStars] = useState([false, false, false, false, false]);
+  const [hoverStars, setHoverStars] = useState([false, false, false, false, false]);
+  // const [reviewStar, setReviewStar] = useState(0);
   const [review, setReview] = useState("");
   const name = spotId;
   const { closeModal } = useModal();
@@ -18,7 +20,11 @@ const PostReviewModal = ({ spotId, onModalClose }) => {
     for (let i = 0; i <= index; i++) {
       newStars[i] = true;
     }
-    setStars(newStars);
+    setHoverStars(newStars);
+  };
+
+  const handleStarLeave = () => {
+    setHoverStars(clickedStars);
   };
 
   const handleStarClick = (index) => {
@@ -26,7 +32,8 @@ const PostReviewModal = ({ spotId, onModalClose }) => {
     for (let i = 0; i <= index; i++) {
       newStars[i] = true;
     }
-    setStars(newStars);
+    setClickedStars(newStars);
+    setHoverStars(newStars)
   };
 
   const handleSubmit = (e) => {
@@ -35,10 +42,13 @@ const PostReviewModal = ({ spotId, onModalClose }) => {
     dispatch(
       thunkCreateReview({
         spotId,
-        stars: stars.filter((star) => star).length, // Count number filled stars
+        stars: clickedStars.filter((star) => star).length, // Count number filled stars
         review,
       })
-    );
+    ).then(() => {
+      dispatch(thunkGetCurrentReviews(spotId));  // grabs reviewws again hopefully
+    });
+    // dispatch(thunkGetCurrentReviews())
     closeModal();
   };
 
@@ -55,36 +65,16 @@ const PostReviewModal = ({ spotId, onModalClose }) => {
           required
         ></textarea>
         <div className="rating-div">
-          <div
-            onMouseEnter={() => handleStarHover(0)}
-            onClick={() => handleStarClick(0)}
-          >
-            {stars[0] ? <span>★</span> : <span>☆</span>}
-          </div>
-          <div
-            onMouseEnter={() => handleStarHover(1)}
-            onClick={() => handleStarClick(1)}
-          >
-            {stars[1] ? <span>★</span> : <span>☆</span>}
-          </div>
-          <div
-            onMouseEnter={() => handleStarHover(2)}
-            onClick={() => handleStarClick(2)}
-          >
-            {stars[2] ? <span>★</span> : <span>☆</span>}
-          </div>
-          <div
-            onMouseEnter={() => handleStarHover(3)}
-            onClick={() => handleStarClick(3)}
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              onMouseEnter={() => handleStarHover(i)}
+              onMouseLeave={handleStarLeave}
+              onClick={() => handleStarClick(i)}
             >
-              {stars[3] ? <span>★</span> : <span>☆</span>}
-          </div>
-          <div
-            onMouseEnter={() => handleStarHover(4)}
-            onClick={() => handleStarClick(4)}
-            >
-              {stars[4] ? <span>★</span> : <span>☆</span>}
-          </div>
+              {hoverStars[i] ? <span>★</span> : <span>☆</span>}
+            </div>
+          ))}
           <span className="stars-text">Stars</span>
         </div>
         <div className="submit-review-div">

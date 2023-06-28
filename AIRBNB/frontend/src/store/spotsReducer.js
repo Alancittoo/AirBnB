@@ -49,8 +49,8 @@ export const searchSpots = (searchResults) => ({
 });
 
 export const thunkCreateImg = (spotId, img) => async (dispatch) => {
-  console.log('spotId', spotId)
-  console.log('spotId', spotId)
+  // console.log('spotId', spotId)
+  // console.log('spotId', spotId)
   const res = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: 'POST',
     headers: {
@@ -181,7 +181,7 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
 export const thunkSearchSpots = (searchTerm) => (dispatch, getState) => {
   if (!searchTerm) {
     dispatch(searchSpots([]))
-    return console.log("empty");
+    // return console.log("empty");
   }
 
   const spots = Object.values(getState().spots);
