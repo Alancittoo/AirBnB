@@ -60,7 +60,7 @@ const validateCreateBooking = [
 })
 
 // PUT /api/bookings/:bookingId
-router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) => {
+router.put('/:bookingId', validateCreateBooking, async (req, res) => {
   let currentBooking = await Booking.findOne({
     where: {id: req.params.bookingId}
   });

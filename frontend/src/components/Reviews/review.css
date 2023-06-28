@@ -20,7 +20,7 @@
   .delete-review-in-spot {
     background-color: red;
     border: 1px black solid;
-    color: black;
+    color: white;
     cursor: pointer;
     text-decoration: none;
     margin-top: 1rem;
@@ -30,6 +30,7 @@
 
   .delete-review-in-spot:hover {
     background-color: beige;
+    color: black;
   }
 
   :root {

@@ -1,0 +1,21 @@
+.create-booking-main-div{
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.create-booking-inputs {
+    justify-content: center;
+    align-items: center;
+
+}
+
+.booking-input,
+.booking-button {
+  margin: 10px 0;
+}
+
+.Update-Booking {
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px black solid;
+}

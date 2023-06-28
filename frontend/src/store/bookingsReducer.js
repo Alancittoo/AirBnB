@@ -81,7 +81,7 @@ export const thunkUpdateBooking = (bookingId, booking) => async (dispatch) => {
     return updatedBooking;
   } else {
     const errors = await res.json();
-    return errors;
+    return console.log(errors);
   }
 };
 

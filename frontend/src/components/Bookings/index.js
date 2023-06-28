@@ -8,6 +8,8 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import { useModal } from '../../context/Modal';
 import ConfirmModalBooking from './ConfirmModalBooking';
 import UpdateModalBooking from './UpdateModalBooking';
+import { thunkGetAllSpots } from '../../store/spotsReducer';
+import './Bookings.css'
 
 const BookingsIndex = () => {
     const dispatch = useDispatch();
@@ -16,9 +18,23 @@ const BookingsIndex = () => {
     const spot = useSelector(state => state.spots)
     const { closeModal } = useModal();
 
+    function formatDate(dateString) {
+        const [year, month, day] = dateString.split('T')[0].split('-');
+        return `${year}-${month}-${day}`;
+    }
+
+    const isBookingInProgress = (booking) => {
+        const now = new Date();
+        const startDate = new Date(booking.startDate);
+        const endDate = new Date(booking.endDate);
+
+        return now >= startDate && now <= endDate;
+    }
+
     useEffect(() => {
         if (user) {
             dispatch(thunkGetCurrentBookings(user.id));
+            dispatch(thunkGetAllSpots())
         }
     }, [dispatch, user]);
 
@@ -38,33 +54,39 @@ const BookingsIndex = () => {
                 <div key={booking.id}>
                     <h2>Booking ID: {booking.id}</h2>
                     <Link to={`/spot/${booking.spotId}`}>Spot Name: {spot[booking.spotId]?.name}</Link>
-                    <p>Start Date: {new Date(booking.startDate).toLocaleDateString()}</p>
-                    <p>End Date: {new Date(booking.endDate).toLocaleDateString()}</p>
-                    <button className="delete-review-in-spot">
-                        <OpenModalMenuItem
-                            itemText="Cancel"
-                            modalComponent=
-                            {<ConfirmModalBooking
-                                onModalClose={closeModal}
-                                bookingId={booking.id}
-                                onDelete={deleteBooking}
-                            />}
-                        />
-                    </button>
-                    <button className="delete-review-in-spot">
-                        <OpenModalMenuItem
-                            itemText="Update"
-                            modalComponent=
-                            {<UpdateModalBooking
-                                onModalClose={closeModal}
-                                bookingId={booking.id}
-                            />}
-                        />
-                    </button>
-                </div>
-            ))}
+                    <p>Start Date: {formatDate(booking.startDate)}</p>
+                    <p>End Date: {formatDate(booking.endDate)}</p>
+                    {isBookingInProgress(booking) ? (
+            <p style={{textDecoration: "underline"}}>Booking is already in progress</p>
+          ) : (
+            <>
+              <button className="delete-review-in-spot">
+                  <OpenModalMenuItem
+                      itemText="Cancel"
+                      modalComponent=
+                      {<ConfirmModalBooking
+                          onModalClose={closeModal}
+                          bookingId={booking.id}
+                          onDelete={deleteBooking}
+                      />}
+                  />
+              </button>
+              <button className="delete-review-in-spot">
+                  <OpenModalMenuItem
+                      itemText="Update"
+                      modalComponent=
+                      {<UpdateModalBooking
+                          onModalClose={closeModal}
+                          bookingId={booking.id}
+                      />}
+                  />
+              </button>
+            </>
+          )}
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 export default BookingsIndex;

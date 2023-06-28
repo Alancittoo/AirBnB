@@ -15,6 +15,7 @@ const UpdateBookingModal = ({ bookingId, onModalClose }) => {
       startDate,
       endDate
     };
+    console.log(bookingId, updatedBooking)
 
     const res = await dispatch(thunkUpdateBooking(bookingId, updatedBooking));
 
@@ -25,7 +26,7 @@ const UpdateBookingModal = ({ bookingId, onModalClose }) => {
   };
 
   return (
-    <div>
+    <div className='Update-Booking'>
       <h1>Update Booking</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -44,8 +45,8 @@ const UpdateBookingModal = ({ bookingId, onModalClose }) => {
             onChange={(e) => setEndDate(e.target.value)}
           />
         </label>
-        <button type="submit">Update Booking</button>
-        <button onClick={onModalClose}>Cancel</button>
+        <button className="delete-review-in-spot" type="submit">Update Booking</button>
+        <button className="delete-review-in-spot"onClick={onModalClose}>Cancel</button>
       </form>
     </div>
   );

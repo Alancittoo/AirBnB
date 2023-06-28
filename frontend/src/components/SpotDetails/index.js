@@ -26,9 +26,9 @@ const SpotIndex = () => {
 
   const [hasReviewed, setHasReviewed] = useState(false);
 
-useEffect(() => {
-  setHasReviewed(!!review.find((rev) => rev.userId === sessionUser?.id));
-}, [review, sessionUser?.id]);
+  useEffect(() => {
+    setHasReviewed(!!review.find((rev) => rev.userId === sessionUser?.id));
+  }, [review, sessionUser?.id]);
 
   const closeMenu = () => setShowMenu(false);
 
@@ -104,13 +104,16 @@ useEffect(() => {
                 </div>
                 <button
                   className="reserve-button"
-                  // onClick={() => alert("Feature coming soon")}
+                // onClick={() => alert("Feature coming soon")}
                 >
-                <OpenModalMenuItem
-                  itemText="Reserve"
-                  buttonClassName='reserve-button'
-                  modalComponent={<BookingModal spotId={oneSpot.id}/>}
-                />
+                  {sessionUser?.id === oneSpot.ownerId ?
+                    "You own this spot and cannot reserve" :
+                    <OpenModalMenuItem
+                      itemText="Reserve"
+                      buttonClassName='reserve-button'
+                      modalComponent={<BookingModal spotId={oneSpot.id} />}
+                    />
+                  }
                   {/* Reserve */}
                 </button>
               </div>
@@ -135,12 +138,12 @@ useEffect(() => {
                   sessionUser &&
                   !hasReviewed && (
                     <button className="post-your-review-btn">
-                    <OpenModalMenuItem
-                    className='post-your-review-btn'
-                      itemText="Post Your Review"
-                      modalComponent={<PostReviewModal spotId={oneSpot.id} />}
-                      buttonClassName="modal-component"
-                    />
+                      <OpenModalMenuItem
+                        className='post-your-review-btn'
+                        itemText="Post Your Review"
+                        modalComponent={<PostReviewModal spotId={oneSpot.id} />}
+                        buttonClassName="modal-component"
+                      />
                     </button>
                   )}
                 <div className="spot-reviews">
@@ -189,18 +192,18 @@ useEffect(() => {
                 {sessionUser?.id !== oneSpot.ownerId && sessionUser && (
                   <div className='post-your-review-btn'>
                     <button>
-                  <OpenModalMenuItem
-                    className='post-your-review-btn'
-                    itemText="Post Your Review"
-                    modalComponent={
-                      <PostReviewModal
-                        spotId={oneSpot.id}
-                        onModalClose={closeModal}
+                      <OpenModalMenuItem
+                        className='post-your-review-btn'
+                        itemText="Post Your Review"
+                        modalComponent={
+                          <PostReviewModal
+                            spotId={oneSpot.id}
+                            onModalClose={closeModal}
+                          />
+                        }
+                        buttonClassName="modal-component"
                       />
-                    }
-                    buttonClassName="modal-component"
-                  />
-                  </button>
+                    </button>
                   </div>
                 )}
               </>
