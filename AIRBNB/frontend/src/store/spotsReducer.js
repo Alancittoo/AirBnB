@@ -6,6 +6,7 @@ export const CREATE_IMAGE_SPOT = "spots/CREATE_IMAGE_SPOT";
 export const CURRENT_SPOTS = "spots/CURRENT_SPOTS";
 export const DELETE_SPOT = "spots/DELETE_SPOT";
 export const UPDATE_SPOT = "spots/UPDATE_SPOT";
+export const SEARCH_SPOTS = "spots/SEARCH_SPOTS"
 
 export const loadSpots = (spots) => ({
   type: LOAD_SPOTS,
@@ -40,6 +41,11 @@ export const deleteSpot = (spotId) => ({
 export const editSpot = (spots) => ({
   type: UPDATE_SPOT,
   spots,
+});
+
+export const searchSpots = (searchResults) => ({
+  type: SEARCH_SPOTS,
+  searchResults,
 });
 
 export const thunkCreateImg = (spotId, img) => async (dispatch) => {
@@ -172,11 +178,36 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
   }
 };
 
-const initialState = {};
+export const thunkSearchSpots = (searchTerm) => (dispatch, getState) => {
+  if (!searchTerm) {
+    dispatch(searchSpots([]))
+    return console.log("empty");
+  }
+
+  const spots = Object.values(getState().spots);
+  // console.log("SPOTS IN SEARCH", spots)
+
+  // spots.forEach((spot) => {
+  //   console.log('spot.name:', spot.name);
+  //   console.log('searchTerm:', searchTerm);
+  //   console.log('Comparison:', spot.name && spot.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  // });
+
+  const searchResults = spots.filter(spot =>
+    spot.name && spot.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  // console.log("SEARCH RES", searchResults)
+  dispatch(searchSpots(searchResults.length ? searchResults : ['No Results Found']));
+  return "Search WOrked!"
+};
+
+const initialState = { searchResults: [], searchStatus: 'idle' };
 
 const spotsReducer = (state = initialState, action) => {
   let newState = {};
   switch (action.type) {
+    case SEARCH_SPOTS:
+      return { ...state, searchResults: action.searchResults, searchStatus: action.searchResults.length ? 'found' : 'not found' };
     case LOAD_SPOTS:
       action.spots.forEach((spot) => (newState[spot.id] = spot));
       return newState;
