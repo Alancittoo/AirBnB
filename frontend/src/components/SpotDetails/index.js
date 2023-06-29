@@ -17,7 +17,7 @@ const SpotIndex = () => {
   const review = Object.values(reviewObj);
   const spot = Object.values(spotObj);
   const { spotId } = useParams();
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const [showMenu, setShowMenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -102,9 +102,11 @@ const SpotIndex = () => {
                     : 'New'}</p>
                   <p>Reviews: {oneSpot.numReviews}</p>
                 </div>
+                {sessionUser &&
                 <button
                   className="reserve-button"
                 // onClick={() => alert("Feature coming soon")}
+                  onClick={() => setModalContent(<BookingModal spotId={oneSpot.id} />)}
                 >
                   {sessionUser?.id === oneSpot.ownerId ?
                     "You own this spot and cannot reserve" :
@@ -116,6 +118,7 @@ const SpotIndex = () => {
                   }
                   {/* Reserve */}
                 </button>
+      }
               </div>
             </div>
             <hr />
@@ -137,7 +140,9 @@ const SpotIndex = () => {
                 {sessionUser?.id !== oneSpot.ownerId &&
                   sessionUser &&
                   !hasReviewed && (
-                    <button className="post-your-review-btn">
+                    <button className="post-your-review-btn"
+                      onClick={() => setModalContent(<PostReviewModal spotId={oneSpot.id} />)}
+                    >
                       <OpenModalMenuItem
                         className='post-your-review-btn'
                         itemText="Post Your Review"
