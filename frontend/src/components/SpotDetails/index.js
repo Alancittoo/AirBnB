@@ -106,6 +106,7 @@ const SpotIndex = () => {
                 <button
                   className="reserve-button"
                 // onClick={() => alert("Feature coming soon")}
+                  disabled={sessionUser?.id === oneSpot.ownerId}
                   onClick={() => setModalContent(<BookingModal spotId={oneSpot.id} />)}
                 >
                   {sessionUser?.id === oneSpot.ownerId ?

@@ -31,6 +31,15 @@ const BookingsIndex = () => {
         return now >= startDate && now <= endDate;
     }
 
+    const isBookingCompleted = (booking) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const endDate = new Date(booking.endDate);
+
+        return endDate < today;
+    }
+
     useEffect(() => {
         if (user) {
             dispatch(thunkGetCurrentBookings(user.id));
@@ -50,43 +59,51 @@ const BookingsIndex = () => {
     return (
         <div>
             <h1>Your Bookings</h1>
-            {bookings.map((booking) => (
+            {bookings.length > 0 ? (
+             bookings.map((booking) => (
                 <div key={booking.id}>
                     <h2>Booking ID: {booking.id}</h2>
                     <Link to={`/spot/${booking.spotId}`}>Spot Name: {spot[booking.spotId]?.name}</Link>
                     <p>Start Date: {formatDate(booking.startDate)}</p>
                     <p>End Date: {formatDate(booking.endDate)}</p>
                     {isBookingInProgress(booking) ? (
-            <p style={{textDecoration: "underline"}}>Booking is already in progress</p>
-          ) : (
-            <>
-              <button className="delete-review-in-spot">
-                  <OpenModalMenuItem
-                      itemText="Cancel"
-                      modalComponent=
-                      {<ConfirmModalBooking
-                          onModalClose={closeModal}
-                          bookingId={booking.id}
-                          onDelete={deleteBooking}
-                      />}
-                  />
-              </button>
-              <button className="delete-review-in-spot">
-                  <OpenModalMenuItem
-                      itemText="Update"
-                      modalComponent=
-                      {<UpdateModalBooking
-                          onModalClose={closeModal}
-                          bookingId={booking.id}
-                      />}
-                  />
-              </button>
-            </>
-          )}
+                        <p style={{ textDecoration: "underline" }}>Booking is already in progress</p>
+                    ) : isBookingCompleted(booking) ? (
+                        <p style={{ textDecoration: "underline" }}>This booking was completed.</p>
+                    ) : (
+                        <>
+                            <button className="delete-review-in-spot">
+                                <OpenModalMenuItem
+                                    itemText="Cancel"
+                                    modalComponent=
+                                    {<ConfirmModalBooking
+                                        onModalClose={closeModal}
+                                        bookingId={booking.id}
+                                        onDelete={deleteBooking}
+                                    />}
+                                />
+                            </button>
+                            <button className="delete-review-in-spot">
+                                <OpenModalMenuItem
+                                    itemText="Update"
+                                    modalComponent=
+                                    {<UpdateModalBooking
+                                        onModalClose={closeModal}
+                                        bookingId={booking.id}
+                                    />}
+                                />
+                            </button>
+                        </>
+                    )}
+                </div>
+            ))
+            ) : (
+                <div>
+                    <p>No bookings available. Click on a spot and reserve it to see your booking here!</p>
+                </div>
+            )}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
 export default BookingsIndex;

@@ -32,8 +32,10 @@ const UserSpots = () => {
     <>
       <h1>Manage Your Spots</h1>
       <div className="wrapper-div-user-spot">
-        {spots.map((spot) => {
-          return (
+
+      {spots.length > 0 ? (
+          spots.map((spot) => {
+            return (
             <>
               <div className="spots-div">
                 <Link to={`/spot/${spot.id}`}>
@@ -50,7 +52,7 @@ const UserSpots = () => {
                       <div>${spot.price} night</div>
                     </div>
 
-                    <div>
+                    <div style={{marginRight: "5px", marginTop: "5px"}}>
                       ★{" "}
                       {spot.avgRating !== null && !isNaN(spot.avgRating)
                         ? spot.avgRating
@@ -74,7 +76,15 @@ const UserSpots = () => {
               </div>
             </>
           );
-        })}
+        })
+        ) : (
+          <div>
+            <p>No spots available. <Link to="/spots/new">Click here to create a new spot!</Link></p>
+          </div>
+        )}
+
+
+
       </div>
     </>
   );

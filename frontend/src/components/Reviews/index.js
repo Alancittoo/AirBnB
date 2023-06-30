@@ -49,7 +49,8 @@ const ReviewIndex = () => {
   return (
     <>
       <h1>Manage Reviews</h1>
-      {reviews.map((review) => {
+      {reviews.length > 0 ? (
+        reviews.map((review) => {
         // console.log("CURRENTREVIEW =>", review);
         const reviewMonth = review.createdAt.split("")[6];
         const year = review.createdAt.split("-")[0];
@@ -76,7 +77,13 @@ const ReviewIndex = () => {
             </div>
           </>
         );
-      })}
+      })
+) : (
+    <div>
+        <p>No reviews yet. Click on a spot you don't own to leave a review!</p>
+    </div>
+)}
+
     </>
   );
 };

@@ -29,18 +29,27 @@ const BookingModal = ({ spotId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!startDate || !endDate) {
+      setErrorMessage("Please select both a start and end date.");
+      return;
+    }
+
     const newStartDate = new Date(startDate);
     const newEndDate = new Date(endDate);
-
     const now = new Date();
     now.setHours(0, 0, 0, 0);
 
-    if (newStartDate < now || newEndDate < now) {
-      setErrorMessage("Booking dates can't be in the past.");
+    if (newStartDate.toISOString().slice(0, 10) <= now.toISOString().slice(0, 10) || newEndDate.toISOString().slice(0, 10) <= now.toISOString().slice(0, 10)) {
+      if (newStartDate.toISOString().slice(0, 10) === now.toISOString().slice(0, 10) || newEndDate.toISOString().slice(0, 10) === now.toISOString().slice(0, 10)) {
+        setErrorMessage("Booking dates can't be current date.");
+      } else {
+        setErrorMessage("Booking dates can't be in the past.");
+      }
       return;
     }
-    if (newStartDate == now || newEndDate == now){
-      setErrorMessage("Booking dates can't be current date.");
+
+    if (newEndDate.toISOString().slice(0, 10) < newStartDate.toISOString().slice(0, 10)) {
+      setErrorMessage("End date can't be earlier than start date.");
       return;
     }
 
@@ -64,19 +73,22 @@ const BookingModal = ({ spotId }) => {
       <h1>Book your stay at {spot && spot.name}</h1>
       {console.log(spots.name)}
       <div className='create-booking-inputs'>
+      <label style={{marginRight: '10px'}}>Start Date</label>
       <input
         style={{margin: "10px"}}
         type="date"
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
       />
-
+      <label style={{marginRight: '10px'}}>End Date</label>
       <input
         type="date"
+        style={{margin: "10px"}}
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
       />
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
+      <br/>
       <button onClick={handleSubmit} style={{margin: "10px"}} className="delete-review-in-spot">
         Book
       </button>

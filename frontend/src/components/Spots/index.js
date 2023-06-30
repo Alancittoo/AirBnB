@@ -6,9 +6,16 @@ import { Link } from "react-router-dom";
 
 const SpotsIndex = () => {
   const { searchResults, searchStatus, ...spotsObj } = useSelector((state) => state.spots || {});
-  let spots = Object.values(spotsObj);
+  // let spots = Object.values(spotsObj);
+  let spots = Object.values(spotsObj).length ? Object.values(spotsObj) : [];
 
-  if (searchResults && searchResults.length > 0) {
+
+
+  // if (searchResults && searchResults.length > 0) {
+  //   spots = searchResults;
+  // }
+
+  if (searchResults) {
     spots = searchResults;
   }
 
@@ -16,14 +23,14 @@ const SpotsIndex = () => {
   useEffect(() => {
     dispatch(thunkGetAllSpots());
   }, [dispatch]);
-
+  // console.log(spots);
   return (
     <>
       <br />
       <br />
 
       <div className="wrapper-div">
-        {spots.length > 0 ? (
+        {spots.length > 0 && spots[0] !== 'No Results Found'  ? (
           spots.map((spot) => {
             return (
               <>
