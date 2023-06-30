@@ -1,0 +1,14 @@
+.footer {
+    background-color: transparent;
+    margin-right: 15px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.footer-details {
+    margin-left: 70px;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+}
