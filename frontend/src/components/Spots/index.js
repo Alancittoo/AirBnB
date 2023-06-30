@@ -43,6 +43,7 @@ const SpotsIndex = () => {
                     )}
                     <div className="spot-wrapper-div">
                       <div className="spot-info">
+                        <div className="spot-location">{spot.name}</div>
                         <div key={spot.id} className="spot-location">
                           {/* {spot.name},  */}
                           {spot.city}{", "}{spot.state}
