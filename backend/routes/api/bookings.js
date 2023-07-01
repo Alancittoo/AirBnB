@@ -82,6 +82,8 @@ router.put('/:bookingId', validateCreateBooking, async (req, res) => {
         raw: true,
         where: {spotId: currentBooking.spotId}
       })
+
+      everyBooking = everyBooking.filter(booking => booking.id !== currentBooking.id);
         //making sure dates are correct
       if (newEnd < newStart) {
         return res.status(400).json({

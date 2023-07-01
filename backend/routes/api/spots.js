@@ -473,6 +473,7 @@ router.get('/:spotId', async (req, res) => {
     })
 
     // POST A BOOKING
+    // api/spots/:spotId/bookings
     router.post("/:spotId/bookings", requireAuth, async (req, res) => {
         let { spotId } = req.params
         spotId = parseInt(spotId)

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { thunkUpdateBooking } from '../../store/bookingsReducer';
+import { csrfFetch } from '../../store/csrf';
 
 const UpdateBookingModal = ({ bookingId, onModalClose }) => {
   const dispatch = useDispatch();
@@ -9,8 +10,6 @@ const UpdateBookingModal = ({ bookingId, onModalClose }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     e.preventDefault();
 
     if (!startDate || !endDate) {
@@ -36,11 +35,11 @@ const UpdateBookingModal = ({ bookingId, onModalClose }) => {
       setErrorMessage("End date can't be earlier than start date.");
       return;
     }
+
     const updatedBooking = {
       startDate,
       endDate
     };
-    console.log(bookingId, updatedBooking)
 
     const res = await dispatch(thunkUpdateBooking(bookingId, updatedBooking));
 
